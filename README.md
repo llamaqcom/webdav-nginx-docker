@@ -14,6 +14,8 @@ docker run -dit --restart unless-stopped \
     llamaq/webdav
 ```
 
+Now you can reach out to your newly created container typing into the web browser address bar 'http://127.0.0.1:8080'.
+
 ## Parameters and Environment Variables
 
 You can customize your container using runtime parameters and environment variables. Parameters are separated by a colon as follows `external:internal` and variables are set as follows `variable=value`.
