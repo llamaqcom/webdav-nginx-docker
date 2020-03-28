@@ -14,7 +14,7 @@ docker run -dit --restart unless-stopped \
     llamaq/webdav
 ```
 
-Now you can reach out to your newly created container typing into the web browser address bar 'http://127.0.0.1:8080'.
+Now you can reach out to your newly created container by typing into the web browser address bar `127.0.0.1:8080`.
 
 ## Parameters and Environment Variables
 
