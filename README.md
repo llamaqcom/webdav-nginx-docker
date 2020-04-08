@@ -9,8 +9,10 @@ Here is a basic snippet to help you get started creating a container.
 ```
 docker run -dit --restart unless-stopped \
     --name webdav \
-    -p 8080:80 \
+    -p 127.0.0.1:8080:80 \
     -v </path/to/data>:/opt/webdav \
+    -e HT_USER=webdav \
+    -e HT_PASS=webdav \
     llamaq/webdav
 ```
 
@@ -39,7 +41,7 @@ List of supported environment variables:
 
 ### Network
 
-For example, `-p 8080:80` would expose port `80` from inside the container to the host's port `8080` outside the container. Moreover, you can limit host's port exposure with an IP address. For instance, `-p 127.0.0.1:8080:80` would expose port `80` from inside the container to the host's IP `127.0.0.1` on port `8080` outside the container. It can be used in conjunction with reverse proxy such as nginx or lighttpd running on the host.
+For example, `-p 127.0.0.1:8080:80` would expose port `80` from inside the container to the host's IP `127.0.0.1` on port `8080` outside the container. It can be used in conjunction with reverse proxy such as nginx or lighttpd running on the host. Please note, by default Docker bypasses iptables/ufw rules on host, so it's **strongly** recommended limit host's port exposure to `localhost` and use this container in conjunction with reverse proxy which supports TLS with SSL certificate. You can grab one from [Let's Encrypt](https://letsencrypt.org/) for free.
 
 ### Authentication modes
 
