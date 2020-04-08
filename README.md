@@ -53,7 +53,7 @@ As for HTTP Basic Auth, three options are available:
 
 ### File permissions
 
-When using volumes (-v flags) permissions issues can arise between the host OS and the container. You can avoid this issue by specifying the user `PUID` value. Please note that current implementation uses the same `PUID` value for both user and his respective group. Special care should be taken when using system users and groups. This is due to the fact that nginx takes `user` from its `nginx.conf` and requires user group to have the same name as the user does. So from the cross-platform compatibility's perspective, it's safe to user either `0` for root or uids greater than or equal to `1000`. Default value for PUID is `1000`, if no environment variable is provided.
+When using volumes (-v flags) permissions issues can arise between the host OS and the container. You can avoid this issue by specifying the user `PUID` and group `PGID` value. For example, `-e PUID=1000 -e PGID=33`. Default values for `PUID` and `PGID` are `1000`, if no environment variables are provided.
 
 ## License
 
