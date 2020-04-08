@@ -1,36 +1,40 @@
 #!/bin/bash
 
 ##
-# Webdav user preparation
+# Define user and group credentials used by worker processes
 ##
 
-user=$(getent passwd ${PUID} | cut -d: -f1)
+group=$(grep ":$PGID:" /etc/group | cut -d: -f1)
 
-if [[ -z "$user" ]]
-then
+if [[ -z "$group" ]]; then
+	group='webdav'
+	echo "Adding group $group($PGID)"
+	addgroup --system --gid $PGID $group
+fi
+
+user=$(getent passwd $PUID | cut -d: -f1)
+
+if [[ -z "$user" ]]; then
 	user='webdav'
-	if ! grep -q ":${PUID}:" /etc/group; then
-		echo "Adding group $user(${PUID})"
-		addgroup --system --gid ${PUID} $user
-	fi
-	echo "Adding user $user(${PUID})"
-	adduser --system --disabled-login --gid ${PUID} --no-create-home --home /nonexistent --gecos "webdav user" --shell /bin/false --uid ${PUID} $user
+	echo "Adding user $user($PUID)"
+	adduser --system --disabled-login --gid $PGID --no-create-home --home /nonexistent --gecos "webdav user" --shell /bin/false --uid $PUID $user
 fi
 
-id $user
+echo "Credentials used by worker processes: user $user($PUID), group $group($PGID)."
 
-group=$(grep ":${PUID}:" /etc/group | cut -d: -f1)
-if [[ $user != $group ]]; then
-	echo "Error! User '$user' and group '$group' do not match for id ${PUID}."
-	exit 1
-fi
+##
+# Update Nginx Config
+##
+
+sed -i 's/^user\s.*$/user '"$user $group"';/g' /etc/nginx/nginx.conf
+sed -i 's/^pid\s.*$/pid \/tmp\/nginx.pid;/g' /etc/nginx/nginx.conf
 
 ##
 # Setting Up Webdav Directory
 ##
 
-chown $user: /opt/webdav
-chown $user: /opt/config
+chown $user:$group /opt/webdav
+chown $user:$group /opt/config
 
 ##
 # Webdav authentification
@@ -48,10 +52,7 @@ else
 fi
 
 ##
-# Nginx
+# Run Nginx
 ##
-
-sed -i 's/^user\s.*$/user '"$user"';/g' /etc/nginx/nginx.conf
-sed -i 's/^pid\s.*$/pid \/tmp\/nginx.pid;/g' /etc/nginx/nginx.conf
 
 nginx -g "daemon off;"

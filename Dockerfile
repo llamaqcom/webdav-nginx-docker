@@ -7,7 +7,7 @@ VOLUME /opt/webdav
 VOLUME /opt/config
 EXPOSE 80
 
-ENV PUID=1000
+ENV PUID=1000 PGID=1000
 ENV HT_USER='' HT_PASS=''
 
 COPY default.conf /etc/nginx/conf.d/default.conf
