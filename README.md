@@ -35,6 +35,7 @@ List of supported environment variables:
 | Variable | Function |
 | :----: | --- |
 | `-e PUID=1000` | *(optional)* for UserID - see below for explanation (default `1000`). |
+| `-e PGID=1000` | *(optional)* for GroupID - see below for explanation (default `1000`). |
 | `-e HT_USER` | *(optional)* for HTTP Basic Auth user - see below for explanation (default empty). |
 | `-e HT_PASS` | *(optional)* for HTTP Basic Auth password - see below for explanation (default empty). |
 
