@@ -1,11 +1,11 @@
+# WebDAV container
+
 ---
 **DEPRECATION WARNING**
 
 This container is deprecated in favor of [llamaq/nginx-extras](https://hub.docker.com/repository/docker/llamaq/nginx-extras) that provides more flexible approach with configuration files.
 
 ---
-
-# WebDAV container
 
 Webdav implementation using nginx - based on Debian stable-slim (for smaller image size) with optional HTTP Basic Auth.
 
