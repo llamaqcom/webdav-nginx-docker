@@ -4,6 +4,8 @@
 
 Webdav implementation using nginx - based on Debian stable-slim (for smaller image size) with optional HTTP Basic Auth.
 
+Docker image: https://hub.docker.com/r/llamaq/webdav
+
 ## Usage
 
 Here is a basic snippet to help you get started creating a container.
